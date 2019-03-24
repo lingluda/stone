@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.mapper.MeasureDoorsetMapper">
+  <resultMap id="BaseResultMap" type="cn.interheart.stone.dao.entity.MeasureDoorset">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="dic_base_area_id" jdbcType="INTEGER" property="dicBaseAreaId" />
+    <result column="dic_base_area_content" jdbcType="VARCHAR" property="dicBaseAreaContent" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="side_td_width_specifications" jdbcType="TINYINT" property="sideTdWidthSpecifications" />
+    <result column="side_left_top_width" jdbcType="DECIMAL" property="sideLeftTopWidth" />
+    <result column="side_left_down_width" jdbcType="DECIMAL" property="sideLeftDownWidth" />
+    <result column="side_right_top_width" jdbcType="DECIMAL" property="sideRightTopWidth" />
+    <result column="side_right_down_width" jdbcType="DECIMAL" property="sideRightDownWidth" />
+    <result column="side_height" jdbcType="DECIMAL" property="sideHeight" />
+    <result column="side_number" jdbcType="INTEGER" property="sideNumber" />
+    <result column="roof_long" jdbcType="DECIMAL" property="roofLong" />
+    <result column="roof_number" jdbcType="INTEGER" property="roofNumber" />
+    <result column="left_ear" jdbcType="DECIMAL" property="leftEar" />
+    <result column="right_ear" jdbcType="DECIMAL" property="rightEar" />
+    <result column="style" jdbcType="TINYINT" property="style" />
+    <result column="panel_td_width_specifications" jdbcType="TINYINT" property="panelTdWidthSpecifications" />
+    <result column="panel_left_top_width" jdbcType="DECIMAL" property="panelLeftTopWidth" />
+    <result column="panel_left_down_width" jdbcType="DECIMAL" property="panelLeftDownWidth" />
+    <result column="panel_right_top_width" jdbcType="DECIMAL" property="panelRightTopWidth" />
+    <result column="panel_right_down_width" jdbcType="DECIMAL" property="panelRightDownWidth" />
+    <result column="panel_height" jdbcType="DECIMAL" property="panelHeight" />
+    <result column="panel_number" jdbcType="INTEGER" property="panelNumber" />
+    <result column="panel_roof_width_specifications" jdbcType="TINYINT" property="panelRoofWidthSpecifications" />
+    <result column="panel_roof_left_width" jdbcType="DECIMAL" property="panelRoofLeftWidth" />
+    <result column="panel_roof_right_width" jdbcType="DECIMAL" property="panelRoofRightWidth" />
+    <result column="panel_roof_number" jdbcType="INTEGER" property="panelRoofNumber" />
+    <result column="doorset_number" jdbcType="INTEGER" property="doorsetNumber" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, project_id, dic_base_area_id, dic_base_area_content, type, side_td_width_specifications, 
+    side_left_top_width, side_left_down_width, side_right_top_width, side_right_down_width, 
+    side_height, side_number, roof_long, roof_number, left_ear, right_ear, style, panel_td_width_specifications, 
+    panel_left_top_width, panel_left_down_width, panel_right_top_width, panel_right_down_width, 
+    panel_height, panel_number, panel_roof_width_specifications, panel_roof_left_width, 
+    panel_roof_right_width, panel_roof_number, doorset_number, product_id, remarks, gmt_create, 
+    gmt_modified
+  </sql>
+  <select id="selectByExample" parameterType="cn.interheart.stone.dao.entity.MeasureDoorsetExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from measure_doorset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from measure_doorset
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from measure_doorset
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.interheart.stone.dao.entity.MeasureDoorsetExample">
+    delete from measure_doorset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.interheart.stone.dao.entity.MeasureDoorset">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into measure_doorset (project_id, dic_base_area_id, dic_base_area_content, 
+      type, side_td_width_specifications, side_left_top_width, 
+      side_left_down_width, side_right_top_width, side_right_down_width, 
+      side_height, side_number, roof_long, 
+      roof_number, left_ear, right_ear, 
+      style, panel_td_width_specifications, panel_left_top_width, 
+      panel_left_down_width, panel_right_top_width, 
+      panel_right_down_width, panel_height, panel_number, 
+      panel_roof_width_specifications, panel_roof_left_width, 
+      panel_roof_right_width, panel_roof_number, doorset_number, 
+      product_id, remarks, gmt_create, 
+      gmt_modified)
+    values (#{projectId,jdbcType=INTEGER}, #{dicBaseAreaId,jdbcType=INTEGER}, #{dicBaseAreaContent,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{sideTdWidthSpecifications,jdbcType=TINYINT}, #{sideLeftTopWidth,jdbcType=DECIMAL}, 
+      #{sideLeftDownWidth,jdbcType=DECIMAL}, #{sideRightTopWidth,jdbcType=DECIMAL}, #{sideRightDownWidth,jdbcType=DECIMAL}, 
+      #{sideHeight,jdbcType=DECIMAL}, #{sideNumber,jdbcType=INTEGER}, #{roofLong,jdbcType=DECIMAL}, 
+      #{roofNumber,jdbcType=INTEGER}, #{leftEar,jdbcType=DECIMAL}, #{rightEar,jdbcType=DECIMAL}, 
+      #{style,jdbcType=TINYINT}, #{panelTdWidthSpecifications,jdbcType=TINYINT}, #{panelLeftTopWidth,jdbcType=DECIMAL}, 
+      #{panelLeftDownWidth,jdbcType=DECIMAL}, #{panelRightTopWidth,jdbcType=DECIMAL}, 
+      #{panelRightDownWidth,jdbcType=DECIMAL}, #{panelHeight,jdbcType=DECIMAL}, #{panelNumber,jdbcType=INTEGER}, 
+      #{panelRoofWidthSpecifications,jdbcType=TINYINT}, #{panelRoofLeftWidth,jdbcType=DECIMAL}, 
+      #{panelRoofRightWidth,jdbcType=DECIMAL}, #{panelRoofNumber,jdbcType=INTEGER}, #{doorsetNumber,jdbcType=INTEGER}, 
+      #{productId,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.interheart.stone.dao.entity.MeasureDoorset">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into measure_doorset
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="dicBaseAreaId != null">
+        dic_base_area_id,
+      </if>
+      <if test="dicBaseAreaContent != null">
+        dic_base_area_content,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="sideTdWidthSpecifications != null">
+        side_td_width_specifications,
+      </if>
+      <if test="sideLeftTopWidth != null">
+        side_left_top_width,
+      </if>
+      <if test="sideLeftDownWidth != null">
+        side_left_down_width,
+      </if>
+      <if test="sideRightTopWidth != null">
+        side_right_top_width,
+      </if>
+      <if test="sideRightDownWidth != null">
+        side_right_down_width,
+      </if>
+      <if test="sideHeight != null">
+        side_height,
+      </if>
+      <if test="sideNumber != null">
+        side_number,
+      </if>
+      <if test="roofLong != null">
+        roof_long,
+      </if>
+      <if test="roofNumber != null">
+        roof_number,
+      </if>
+      <if test="leftEar != null">
+        left_ear,
+      </if>
+      <if test="rightEar != null">
+        right_ear,
+      </if>
+      <if test="style != null">
+        style,
+      </if>
+      <if test="panelTdWidthSpecifications != null">
+        panel_td_width_specifications,
+      </if>
+      <if test="panelLeftTopWidth != null">
+        panel_left_top_width,
+      </if>
+      <if test="panelLeftDownWidth != null">
+        panel_left_down_width,
+      </if>
+      <if test="panelRightTopWidth != null">
+        panel_right_top_width,
+      </if>
+      <if test="panelRightDownWidth != null">
+        panel_right_down_width,
+      </if>
+      <if test="panelHeight != null">
+        panel_height,
+      </if>
+      <if test="panelNumber != null">
+        panel_number,
+      </if>
+      <if test="panelRoofWidthSpecifications != null">
+        panel_roof_width_specifications,
+      </if>
+      <if test="panelRoofLeftWidth != null">
+        panel_roof_left_width,
+      </if>
+      <if test="panelRoofRightWidth != null">
+        panel_roof_right_width,
+      </if>
+      <if test="panelRoofNumber != null">
+        panel_roof_number,
+      </if>
+      <if test="doorsetNumber != null">
+        doorset_number,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="dicBaseAreaId != null">
+        #{dicBaseAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="dicBaseAreaContent != null">
+        #{dicBaseAreaContent,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="sideTdWidthSpecifications != null">
+        #{sideTdWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="sideLeftTopWidth != null">
+        #{sideLeftTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideLeftDownWidth != null">
+        #{sideLeftDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideRightTopWidth != null">
+        #{sideRightTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideRightDownWidth != null">
+        #{sideRightDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideHeight != null">
+        #{sideHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="sideNumber != null">
+        #{sideNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roofLong != null">
+        #{roofLong,jdbcType=DECIMAL},
+      </if>
+      <if test="roofNumber != null">
+        #{roofNumber,jdbcType=INTEGER},
+      </if>
+      <if test="leftEar != null">
+        #{leftEar,jdbcType=DECIMAL},
+      </if>
+      <if test="rightEar != null">
+        #{rightEar,jdbcType=DECIMAL},
+      </if>
+      <if test="style != null">
+        #{style,jdbcType=TINYINT},
+      </if>
+      <if test="panelTdWidthSpecifications != null">
+        #{panelTdWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="panelLeftTopWidth != null">
+        #{panelLeftTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelLeftDownWidth != null">
+        #{panelLeftDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRightTopWidth != null">
+        #{panelRightTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRightDownWidth != null">
+        #{panelRightDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelHeight != null">
+        #{panelHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="panelNumber != null">
+        #{panelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="panelRoofWidthSpecifications != null">
+        #{panelRoofWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="panelRoofLeftWidth != null">
+        #{panelRoofLeftWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRoofRightWidth != null">
+        #{panelRoofRightWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRoofNumber != null">
+        #{panelRoofNumber,jdbcType=INTEGER},
+      </if>
+      <if test="doorsetNumber != null">
+        #{doorsetNumber,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.interheart.stone.dao.entity.MeasureDoorsetExample" resultType="java.lang.Long">
+    select count(*) from measure_doorset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update measure_doorset
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dicBaseAreaId != null">
+        dic_base_area_id = #{record.dicBaseAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dicBaseAreaContent != null">
+        dic_base_area_content = #{record.dicBaseAreaContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.sideTdWidthSpecifications != null">
+        side_td_width_specifications = #{record.sideTdWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="record.sideLeftTopWidth != null">
+        side_left_top_width = #{record.sideLeftTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sideLeftDownWidth != null">
+        side_left_down_width = #{record.sideLeftDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sideRightTopWidth != null">
+        side_right_top_width = #{record.sideRightTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sideRightDownWidth != null">
+        side_right_down_width = #{record.sideRightDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sideHeight != null">
+        side_height = #{record.sideHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sideNumber != null">
+        side_number = #{record.sideNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.roofLong != null">
+        roof_long = #{record.roofLong,jdbcType=DECIMAL},
+      </if>
+      <if test="record.roofNumber != null">
+        roof_number = #{record.roofNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.leftEar != null">
+        left_ear = #{record.leftEar,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rightEar != null">
+        right_ear = #{record.rightEar,jdbcType=DECIMAL},
+      </if>
+      <if test="record.style != null">
+        style = #{record.style,jdbcType=TINYINT},
+      </if>
+      <if test="record.panelTdWidthSpecifications != null">
+        panel_td_width_specifications = #{record.panelTdWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="record.panelLeftTopWidth != null">
+        panel_left_top_width = #{record.panelLeftTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelLeftDownWidth != null">
+        panel_left_down_width = #{record.panelLeftDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelRightTopWidth != null">
+        panel_right_top_width = #{record.panelRightTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelRightDownWidth != null">
+        panel_right_down_width = #{record.panelRightDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelHeight != null">
+        panel_height = #{record.panelHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelNumber != null">
+        panel_number = #{record.panelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.panelRoofWidthSpecifications != null">
+        panel_roof_width_specifications = #{record.panelRoofWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="record.panelRoofLeftWidth != null">
+        panel_roof_left_width = #{record.panelRoofLeftWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelRoofRightWidth != null">
+        panel_roof_right_width = #{record.panelRoofRightWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.panelRoofNumber != null">
+        panel_roof_number = #{record.panelRoofNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.doorsetNumber != null">
+        doorset_number = #{record.doorsetNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update measure_doorset
+    set id = #{record.id,jdbcType=INTEGER},
+      project_id = #{record.projectId,jdbcType=INTEGER},
+      dic_base_area_id = #{record.dicBaseAreaId,jdbcType=INTEGER},
+      dic_base_area_content = #{record.dicBaseAreaContent,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=TINYINT},
+      side_td_width_specifications = #{record.sideTdWidthSpecifications,jdbcType=TINYINT},
+      side_left_top_width = #{record.sideLeftTopWidth,jdbcType=DECIMAL},
+      side_left_down_width = #{record.sideLeftDownWidth,jdbcType=DECIMAL},
+      side_right_top_width = #{record.sideRightTopWidth,jdbcType=DECIMAL},
+      side_right_down_width = #{record.sideRightDownWidth,jdbcType=DECIMAL},
+      side_height = #{record.sideHeight,jdbcType=DECIMAL},
+      side_number = #{record.sideNumber,jdbcType=INTEGER},
+      roof_long = #{record.roofLong,jdbcType=DECIMAL},
+      roof_number = #{record.roofNumber,jdbcType=INTEGER},
+      left_ear = #{record.leftEar,jdbcType=DECIMAL},
+      right_ear = #{record.rightEar,jdbcType=DECIMAL},
+      style = #{record.style,jdbcType=TINYINT},
+      panel_td_width_specifications = #{record.panelTdWidthSpecifications,jdbcType=TINYINT},
+      panel_left_top_width = #{record.panelLeftTopWidth,jdbcType=DECIMAL},
+      panel_left_down_width = #{record.panelLeftDownWidth,jdbcType=DECIMAL},
+      panel_right_top_width = #{record.panelRightTopWidth,jdbcType=DECIMAL},
+      panel_right_down_width = #{record.panelRightDownWidth,jdbcType=DECIMAL},
+      panel_height = #{record.panelHeight,jdbcType=DECIMAL},
+      panel_number = #{record.panelNumber,jdbcType=INTEGER},
+      panel_roof_width_specifications = #{record.panelRoofWidthSpecifications,jdbcType=TINYINT},
+      panel_roof_left_width = #{record.panelRoofLeftWidth,jdbcType=DECIMAL},
+      panel_roof_right_width = #{record.panelRoofRightWidth,jdbcType=DECIMAL},
+      panel_roof_number = #{record.panelRoofNumber,jdbcType=INTEGER},
+      doorset_number = #{record.doorsetNumber,jdbcType=INTEGER},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.interheart.stone.dao.entity.MeasureDoorset">
+    update measure_doorset
+    <set>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="dicBaseAreaId != null">
+        dic_base_area_id = #{dicBaseAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="dicBaseAreaContent != null">
+        dic_base_area_content = #{dicBaseAreaContent,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="sideTdWidthSpecifications != null">
+        side_td_width_specifications = #{sideTdWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="sideLeftTopWidth != null">
+        side_left_top_width = #{sideLeftTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideLeftDownWidth != null">
+        side_left_down_width = #{sideLeftDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideRightTopWidth != null">
+        side_right_top_width = #{sideRightTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideRightDownWidth != null">
+        side_right_down_width = #{sideRightDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="sideHeight != null">
+        side_height = #{sideHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="sideNumber != null">
+        side_number = #{sideNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roofLong != null">
+        roof_long = #{roofLong,jdbcType=DECIMAL},
+      </if>
+      <if test="roofNumber != null">
+        roof_number = #{roofNumber,jdbcType=INTEGER},
+      </if>
+      <if test="leftEar != null">
+        left_ear = #{leftEar,jdbcType=DECIMAL},
+      </if>
+      <if test="rightEar != null">
+        right_ear = #{rightEar,jdbcType=DECIMAL},
+      </if>
+      <if test="style != null">
+        style = #{style,jdbcType=TINYINT},
+      </if>
+      <if test="panelTdWidthSpecifications != null">
+        panel_td_width_specifications = #{panelTdWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="panelLeftTopWidth != null">
+        panel_left_top_width = #{panelLeftTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelLeftDownWidth != null">
+        panel_left_down_width = #{panelLeftDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRightTopWidth != null">
+        panel_right_top_width = #{panelRightTopWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRightDownWidth != null">
+        panel_right_down_width = #{panelRightDownWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelHeight != null">
+        panel_height = #{panelHeight,jdbcType=DECIMAL},
+      </if>
+      <if test="panelNumber != null">
+        panel_number = #{panelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="panelRoofWidthSpecifications != null">
+        panel_roof_width_specifications = #{panelRoofWidthSpecifications,jdbcType=TINYINT},
+      </if>
+      <if test="panelRoofLeftWidth != null">
+        panel_roof_left_width = #{panelRoofLeftWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRoofRightWidth != null">
+        panel_roof_right_width = #{panelRoofRightWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="panelRoofNumber != null">
+        panel_roof_number = #{panelRoofNumber,jdbcType=INTEGER},
+      </if>
+      <if test="doorsetNumber != null">
+        doorset_number = #{doorsetNumber,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.interheart.stone.dao.entity.MeasureDoorset">
+    update measure_doorset
+    set project_id = #{projectId,jdbcType=INTEGER},
+      dic_base_area_id = #{dicBaseAreaId,jdbcType=INTEGER},
+      dic_base_area_content = #{dicBaseAreaContent,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      side_td_width_specifications = #{sideTdWidthSpecifications,jdbcType=TINYINT},
+      side_left_top_width = #{sideLeftTopWidth,jdbcType=DECIMAL},
+      side_left_down_width = #{sideLeftDownWidth,jdbcType=DECIMAL},
+      side_right_top_width = #{sideRightTopWidth,jdbcType=DECIMAL},
+      side_right_down_width = #{sideRightDownWidth,jdbcType=DECIMAL},
+      side_height = #{sideHeight,jdbcType=DECIMAL},
+      side_number = #{sideNumber,jdbcType=INTEGER},
+      roof_long = #{roofLong,jdbcType=DECIMAL},
+      roof_number = #{roofNumber,jdbcType=INTEGER},
+      left_ear = #{leftEar,jdbcType=DECIMAL},
+      right_ear = #{rightEar,jdbcType=DECIMAL},
+      style = #{style,jdbcType=TINYINT},
+      panel_td_width_specifications = #{panelTdWidthSpecifications,jdbcType=TINYINT},
+      panel_left_top_width = #{panelLeftTopWidth,jdbcType=DECIMAL},
+      panel_left_down_width = #{panelLeftDownWidth,jdbcType=DECIMAL},
+      panel_right_top_width = #{panelRightTopWidth,jdbcType=DECIMAL},
+      panel_right_down_width = #{panelRightDownWidth,jdbcType=DECIMAL},
+      panel_height = #{panelHeight,jdbcType=DECIMAL},
+      panel_number = #{panelNumber,jdbcType=INTEGER},
+      panel_roof_width_specifications = #{panelRoofWidthSpecifications,jdbcType=TINYINT},
+      panel_roof_left_width = #{panelRoofLeftWidth,jdbcType=DECIMAL},
+      panel_roof_right_width = #{panelRoofRightWidth,jdbcType=DECIMAL},
+      panel_roof_number = #{panelRoofNumber,jdbcType=INTEGER},
+      doorset_number = #{doorsetNumber,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

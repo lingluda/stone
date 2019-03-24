@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.sys.SysUserExtMapper">
+  <select id="extList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT
+    sys_user.id as id,
+    sys_user.account as account,
+    sys_user.`name` as name,
+    sys_user.phone as phone,
+    sys_user.gmt_create as gmtCreate,
+    sys_user.gmt_modified as gmtModified,
+    coalesce(sys_role.id, '') as roleId,
+    coalesce(sys_role.name, '')  as roleName,
+    sys_user.status as status
+    FROM sys_user as sys_user
+    left join sys_user_role as sys_user_role on sys_user.id = sys_user_role.sys_user_id
+    left join sys_role as sys_role on sys_user_role.sys_role_id = sys_role.id
+    <where>
+
+      <if test="account != null and account !=''">
+        sys_user.account like CONCAT('%',#{account},'%')
+      </if>
+
+    </where>
+
+  </select>
+</mapper>

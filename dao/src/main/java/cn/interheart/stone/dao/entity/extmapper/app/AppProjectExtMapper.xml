@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.app.AppProjectExtMapper">
+
+    <select id="measureProjectList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        select
+            p.id  AS id ,
+            p.project_name as projectName,
+            p.customer_name AS customerName ,
+            p. STATUS AS status ,
+            p.phone AS phone ,
+            p.gmt_create AS gmtCreate
+        from project p
+            where
+              p.lc_user_id = #{lcUserId}
+              and p.status in (#{scale},#{offer})
+            order by
+                p.status asc,  p.gmt_modified desc, p.gmt_create desc
+    </select>
+    <!--项目的基本信息-->
+    <select id="projectBaseInfo" parameterType="java.lang.Integer" resultType="cn.interheart.stone.dao.entity.extmapper.app.dto.ProjectBaseDto">
+        SELECT
+            project.project_name as name,
+            project.customer_name as customerName,
+            project.phone as phone,
+            project.address as address,
+            project.status as status
+        FROM
+            project AS project
+        WHERE
+            project.id = #{projectId}
+    </select>
+
+    <!--统计量尺块数-->
+    <select id="countMeasureNumber" parameterType="java.lang.Integer" resultType="java.util.Map">
+       SELECT
+        ( SELECT coalesce(sum(number), 0) FROM measure_plate where project_id = #{projectId} and type = 0 ) AS doorsillNumber
+    </select>
+</mapper>

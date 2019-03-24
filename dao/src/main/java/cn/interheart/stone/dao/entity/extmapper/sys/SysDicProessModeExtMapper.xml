@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.sys.SysDicProessModeExtMapper">
+
+    <select id="extList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+            dic_process_mode.*,
+            picture_attchment.id as imageId,
+            picture_attchment.filename as filename,
+            picture_attchment.type as type,
+            picture_attchment.path
+        FROM
+            dic_process_mode AS dic_process_mode
+        LEFT JOIN
+            picture_attchment AS picture_attchment ON dic_process_mode.id = picture_attchment.parent_id and picture_attchment.type = #{type}
+        WHERE
+            (dic_process_mode.company_id = 0 or dic_process_mode.company_id = #{companyId})
+        <if test="name != null and name !=''" >
+            and dic_process_mode.name like CONCAT('%',#{name},'%')
+        </if>
+
+    </select>
+
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.sys.SysCompanyStoreExtMapper">
+
+
+    <select id="companyStorelist" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+        company.name as companyName,
+        company_store.*
+        FROM
+        company_store AS company_store
+        LEFT JOIN company AS company ON company_store.company_id = company.id
+        <where>
+            company_store.status != 0
+            <if test="companyId != null and companyId !=''">
+                and   company_store.company_id = #{companyId}
+            </if>
+
+            <if test="name != null and name !=''">
+                and company_store.name  like CONCAT('%',#{name},'%')
+            </if>
+
+            <if test="companyName != null and companyName !=''">
+                and  company.name = #{companyName}
+            </if>
+
+        </where>
+    </select>
+</mapper>

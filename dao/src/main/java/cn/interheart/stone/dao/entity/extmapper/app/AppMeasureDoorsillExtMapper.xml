@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.app.AppMeasureDoorsillExtMapper">
+
+    <select id="extInfo" parameterType="Integer" resultType="java.util.HashMap">
+        SELECT
+        measure_doorsill.gmt_create AS gmtCreate,
+        measure_doorsill.right_width AS rightWidth,
+        measure_doorsill.length AS length,
+        measure_doorsill.hang_side_number AS hangSideNumber,
+        measure_doorsill.doorsill_number AS doorsillNumber,
+        measure_doorsill.is_big_small_head AS isBigSmallHead,
+        measure_doorsill.gmt_modified AS gmtModified,
+        measure_doorsill.hang_side_width AS hangSideWidth,
+        measure_doorsill.dic_base_area_content AS dicBaseAreaContent,
+        measure_doorsill.left_width AS leftWidth,
+        measure_doorsill.project_id AS projectId,
+        measure_doorsill.dic_base_area_id AS dicBaseAreaId,
+        measure_doorsill.product_id AS productId,
+        measure_doorsill.id AS id,
+        measure_doorsill.hang_wear_side AS hangWearSide,
+        measure_doorsill.remarks AS remarks,
+        dic_base.content AS content
+        FROM
+        measure_doorsill AS measure_doorsill
+        LEFT JOIN product AS product ON measure_doorsill.product_id = product.id
+        LEFT JOIN dic_base as dic_base on product.dic_type_code = dic_base.id
+        <where>
+            measure_doorsill.id = #{id}
+        </where>
+
+    </select>
+
+    <select id="extProgrammeInfo" parameterType="Integer" resultType="java.util.HashMap">
+        select
+            measure_programme.gmt_create AS gmtCreate,
+            measure_programme.parent_id AS parentId,
+            measure_programme.id AS id,
+            measure_programme.dic_process_instruction_id AS dicProcessInstructionId,
+            measure_programme.dic_process_model_id AS dicProcessModelId,
+            measure_programme.type AS type,
+            measure_programme.gmt_modified AS gmtModified,
+            picture_attchment.path,
+            picture_attchment.id as imageId
+        FROM
+          measure_programme AS measure_programme
+        LEFT JOIN
+          picture_attchment AS picture_attchment ON measure_programme.id	= picture_attchment.parent_id AND	picture_attchment.type = 9
+
+        <where>
+            measure_programme.id = #{id}
+        </where>
+
+    </select>
+
+
+
+</mapper>

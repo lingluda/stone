@@ -1,0 +1,44 @@
+# Operating System Files  
+  
+*.DS_Store  
+Thumbs.db  
+*.sw?  
+.#*  
+*#  
+*~  
+*.sublime-*  
+workspace.xml
+# Build Artifacts  
+  
+.gradle/  
+target/  
+bin/  
+dependency-reduced-pom.xml  
+  
+# Eclipse Project Files  
+  
+.classpath  
+.project  
+.settings/  
+  
+# IntelliJ IDEA Files  
+  
+*.iml  
+*.ipr  
+*.iws  
+*.idea  
+  
+README.html  
+logs/
+web/nginx/
+web/nginx/logs/nginx.pid
+web/nginx/logs/access.log
+web/nginx/logs/error.log
+web/nginx/logs/access.log
+web/nginx/logs/error.log
+
+# node_modules
+node_modules/
+# log
+*.log
+*.epoch

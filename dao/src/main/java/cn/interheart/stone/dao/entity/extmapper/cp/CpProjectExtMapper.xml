@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.cp.CpProjectExtMapper">
+  <select id="extList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+      SELECT
+      employ_info.name as xs_name,
+      employ_info.phone as xs_phone,
+      project.*
+      FROM
+      project AS project
+      LEFT JOIN employ_user AS employ_user ON project.xs_user_id = employ_user.id
+      left join employ_info as employ_info on employ_user.employ_info_id = employ_info.id
+    <where>
+          project.company_id = #{companyId}
+      <if test="name != null and name !=''">
+          AND project.customer_name like CONCAT('%',#{name},'%')
+      </if>
+
+      <if test="starDate != null and starDate != null and endDate!='' and endDate!=''">
+            AND project.gmt_create BETWEEN #{starDate} AND #{endDate}
+      </if>
+
+
+    </where>
+  </select>
+</mapper>

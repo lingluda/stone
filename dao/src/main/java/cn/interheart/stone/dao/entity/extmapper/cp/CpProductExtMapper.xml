@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.cp.CpProductExtMapper">
+  <select id="extList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+      SELECT
+      product.* ,
+      dic_type.content as dicTypeContext,
+      dic_background.content as dicBackgroundContext,
+      dic_lines.content as dicLinesContext,
+      dic_lines_color.content as dicLinesColorContext
+      FROM
+      product AS product
+      LEFT JOIN dic_base AS dic_type ON product.dic_type_code = dic_type.id
+      LEFT JOIN dic_base as dic_background on product.dic_background_code = dic_background.id
+      LEFT JOIN dic_base as dic_lines on product.dic_background_code = dic_lines.id
+      LEFT JOIN dic_base as dic_lines_color on product.dic_background_code = dic_lines_color.id
+    <where>
+        (product.company_id = 0 or product.company_id = #{companyId})
+
+      <if test="name != null and name !=''">
+       AND product.name like CONCAT('%',#{name},'%')
+      </if>
+
+      <if test="dicTypeCode != null and dicTypeCode !=''">
+        and dic_type.id = #{dicTypeCode}
+      </if>
+
+    </where>
+  </select>
+</mapper>

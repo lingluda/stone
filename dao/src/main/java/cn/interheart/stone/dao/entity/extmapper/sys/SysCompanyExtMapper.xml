@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.sys.SysCompanyExtMapper">
+
+    <select id="countCompanyStroe" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+        company.id as id,
+        company.name as name,
+        (SELECT count(*) FROM company_store WHERE company_store.type = 0 and company_store.company_id = company.id) as hzd,
+        (SELECT count(*) FROM company_store WHERE company_store.type = 1 and company_store.company_id = company.id) as jmd,
+        (SELECT count(*) FROM company_store WHERE company_store.type = 2 and company_store.company_id = company.id) as gld,
+        (SELECT count(*) FROM company_store WHERE company_store.type = 3 and company_store.company_id = company.id) as zxd,
+        company.gmt_create as gmt_create,
+        company.gmt_modified as gmt_modified
+        FROM
+        company AS company
+
+        <where>
+
+            <if test="name != null and name!=''">
+                company.name like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+        order by hzd desc, jmd desc, gld desc, zxd desc
+    </select>
+</mapper>

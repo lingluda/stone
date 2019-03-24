@@ -1,0 +1,15 @@
+server:
+    port: ${server.port}
+spring:
+  http:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+  aop:
+    auto: true
+    proxy-target-class: false
+  jackson:
+    date-format : yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.cp.CpProjectVisitExtMapper">
+    <resultMap id="resultMap" type="cn.interheart.stone.dao.entity.extmapper.app.dto.ProjectVisitDto">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="contactTime" jdbcType="TIMESTAMP" property="contactTime" />
+        <result column="contactType" jdbcType="TINYINT" property="contactType" />
+        <result column="followUpDescription" jdbcType="VARCHAR" property="followUpDescription" />
+        <result column="customerIntention" jdbcType="TINYINT" property="customerIntention" />
+        <result column="nextContext" jdbcType="VARCHAR" property="nextContext" />
+        <result column="estimatedTime" jdbcType="TIMESTAMP" property="estimatedTime" />
+        <result column="earnestMoney" jdbcType="DECIMAL" property="earnestMoney" />
+        <result column="payType" jdbcType="VARCHAR" property="payType" />
+        <result column="payAccount" jdbcType="VARCHAR" property="payAccount" />
+        <result column="payDate" jdbcType="TIMESTAMP" property="payDate" />
+        <result column="execDate" jdbcType="TIMESTAMP" property="execDate" />
+        <result column="causeOfLoss" jdbcType="VARCHAR" property="causeOfLoss" />
+        <result column="gmtCreate" jdbcType="TIMESTAMP" property="gmtCreate" />
+
+        <result column="lcUserId"  property="lcUserId" />
+        <result column="lcName"  property="lcName" />
+        <result column="lcPhone"  property="lcPhone" />
+    </resultMap>
+
+    <sql id="select_coum">
+        pv.id as id, pv.project_id as projectId, pv.contact_time as contactTime, pv.contact_type as contactType, pv.follow_up_description as followUpDescription,
+        pv.customer_intention as customerIntention,
+        pv.next_context as nextContext, pv.estimated_time as estimatedTime, pv.earnest_money as earnestMoney, pv.pay_type as payType, pv.pay_account as payAccount,
+        pv.pay_date as payDate, pv.exec_date as execDate,
+        pv.cause_of_loss, pv.gmt_create as gmtCreate,
+        p.lc_user_id as lcUserId , ei.name as lcName,ei.phone as lcPhone
+    </sql>
+
+
+    <select id="getProjectVisitList" parameterType="java.util.HashMap"  resultMap="resultMap">
+        SELECT
+         <include refid="select_coum" />
+        FROM
+          project_visit pv
+        INNER JOIN project p ON p.id = pv.project_id
+        left JOIN employ_user eu ON eu.id = p.lc_user_id
+        left JOIN employ_info ei ON ei.id = eu.employ_info_id
+        where
+        project_id = #{projectId}
+        order by
+        pv.gmt_create desc
+    </select>
+
+
+</mapper>

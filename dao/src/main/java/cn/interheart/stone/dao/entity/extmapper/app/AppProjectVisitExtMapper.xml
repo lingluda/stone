@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.app.AppProjectVisitExtMapper">
+    <resultMap id="toResultMap" type="cn.interheart.stone.dao.entity.extmapper.app.dto.ProjectDto">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="gmtCreate" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="customerIntention" jdbcType="TINYINT" property="customerIntention" />
+    </resultMap>
+
+
+    <resultMap id="resultMap" type="cn.interheart.stone.dao.entity.ProjectVisit">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="project_id" jdbcType="INTEGER" property="projectId" />
+        <result column="contact_time" jdbcType="TIMESTAMP" property="contactTime" />
+        <result column="contact_type" jdbcType="TINYINT" property="contactType" />
+        <result column="follow_up_description" jdbcType="VARCHAR" property="followUpDescription" />
+        <result column="customer_intention" jdbcType="TINYINT" property="customerIntention" />
+        <result column="next_context" jdbcType="VARCHAR" property="nextContext" />
+        <result column="estimated_time" jdbcType="TIMESTAMP" property="estimatedTime" />
+        <result column="earnest_money" jdbcType="DECIMAL" property="earnestMoney" />
+        <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+        <result column="pay_account" jdbcType="VARCHAR" property="payAccount" />
+        <result column="pay_date" jdbcType="TIMESTAMP" property="payDate" />
+        <result column="exec_date" jdbcType="TIMESTAMP" property="execDate" />
+        <result column="cause_of_loss" jdbcType="VARCHAR" property="causeOfLoss" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    </resultMap>
+
+    <sql id="select_coum">
+    id, project_id, contact_time, contact_type, follow_up_description, customer_intention,
+    next_context, estimated_time, earnest_money, pay_type, pay_account, pay_date, exec_date,
+    cause_of_loss, gmt_create, gmt_modified
+    </sql>
+
+  <select id="getCustomerVisitList" parameterType="java.util.HashMap"  resultMap="toResultMap" >
+    select
+        p.id  AS id ,
+        p.project_name as projectName,
+        p. STATUS AS STATUS ,
+        p.customer_name AS customerName ,
+        p.phone AS phone ,
+        p.customer_intention AS customerIntention ,
+        p.gmt_create AS gmtCreate
+    from project p
+        where
+          p.xs_user_id = #{xsUserId}
+        order by
+            p.gmt_create desc
+  </select>
+
+    <select id="getProjectVisitList" parameterType="java.util.HashMap"  resultMap="resultMap">
+        select
+        <include refid="select_coum" />
+        from project_visit
+        where
+        project_id = #{projectId}
+        order by
+        gmt_create desc
+    </select>
+
+
+
+</mapper>

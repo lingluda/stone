@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.common.CoProductExtMapper">
+
+    <select id="productList" parameterType="java.util.HashMap" resultType="java.util.HashMap" >
+        SELECT
+            product.id AS id,
+            product.NAME AS name,
+            dic_base.content AS type
+        FROM
+            product AS product
+        INNER JOIN
+            dic_base AS dic_base ON dic_base.id = product.dic_type_code
+        WHERE
+            company_id = 0 or company_id = #{companyId}
+    </select>
+</mapper>

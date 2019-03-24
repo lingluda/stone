@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.cp.CpEmployUserExtMapper">
+
+    <select id="extList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+        employ_user.*,
+        employ_info.NAME AS userName,
+        employ_info.phone AS phone
+
+        FROM
+        employ_user AS employ_user
+        LEFT JOIN employ_info AS employ_info ON employ_user.employ_info_id = employ_info.id
+        WHERE
+        employ_user.company_id = #{companyId}
+        and employ_user.user_type != 4
+
+    </select>
+
+    <select id="extInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+        employ_user.company_id,
+        employ_user.employ_info_id,
+        employ_user.account,
+        employ_user.gmt_create,
+        employ_user.gmt_modified,
+        employ_user.status,
+        employ_user.user_type,
+        employ_info.NAME AS userName,
+        employ_info.phone AS phone
+
+        FROM
+        employ_user AS employ_user
+        LEFT JOIN employ_info AS employ_info ON employ_user.employ_info_id = employ_info.id
+        WHERE
+        employ_user.id = #{id}
+
+    </select>
+</mapper>

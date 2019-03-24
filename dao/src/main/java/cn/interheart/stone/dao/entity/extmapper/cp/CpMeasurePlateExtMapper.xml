@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.interheart.stone.dao.entity.extmapper.cp.CpMeasurePlateExtMapper">
+
+    <resultMap id="BaseResultMap" type="cn.interheart.stone.dao.entity.extmapper.cp.dto.MeasurePlateDto">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="parentId" jdbcType="INTEGER" property="parentId" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="area" jdbcType="VARCHAR" property="area" />
+        <result column="productName" jdbcType="VARCHAR" property="productName" />
+        <result column="productType" jdbcType="VARCHAR" property="productType" />
+        <result column="length" jdbcType="VARCHAR" property="length" />
+        <result column="windth" jdbcType="VARCHAR" property="windth" />
+        <result column="height" jdbcType="VARCHAR" property="height" />
+        <result column="number" jdbcType="VARCHAR" property="number" />
+        <result column="processMode" jdbcType="VARCHAR" property="processMode" />
+        <result column="processInstruction" jdbcType="VARCHAR" property="processInstruction" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+        <result column="gmtCreate" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmtModified" jdbcType="TIMESTAMP" property="gmtModified" />
+        <result column="imageId" jdbcType="VARCHAR" property="imageId" />
+        <result column="materialCost" jdbcType="DECIMAL" property="materialCost" />
+        <result column="processCost" jdbcType="DECIMAL" property="processCost" />
+        <result column="installationCost" jdbcType="DECIMAL" property="installationCost" />
+        <result column="excipientCost" jdbcType="DECIMAL" property="excipientCost" />
+        <result column="nursingCost" jdbcType="DECIMAL" property="nursingCost" />
+        <result column="sumCost" jdbcType="DECIMAL" property="sumCost" />
+
+        <result column="path" jdbcType="DECIMAL" property="path" />
+        <result column="filename" jdbcType="DECIMAL" property="filename" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        mp.id as id,mp.project_id as projectId, mp.parent_id as parentId, mp.type as type , mp.area as area, mp.product_name productName,
+        mp.product_type as productType, mp.length as length, mp.windth as windth, mp.height as height, mp.number as number,
+        mp.process_mode as processMode , mp.process_instruction as processInstruction, mp.remarks as remarks,
+        mp.gmt_create as gmtCreate , mp.gmt_modified as gmtModified , mp.image_id as imageId,
+        mp.material_cost as materialCost , mp.process_cost as processCost, mp.installation_cost as installationCost, mp.excipient_cost as excipientCost,
+        mp.nursing_cost as nursingCost ,mp.sum_cost as sumCost,
+        pa.path as path , pa.filename as filename
+    </sql>
+
+    <select id="getMeasureList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+            `measure_plate` mp
+        LEFT JOIN picture_attchment pa ON pa.id = mp.image_id
+        WHERE
+            1 = 1
+        <if test="projectId != null">
+            and mp.project_id = #{projectId}
+        </if>
+    </select>
+
+    <select id="getMeasureOfferList" parameterType="java.util.Map" resultType="cn.interheart.stone.service.cp.vo.MeasureOfferVo">
+        SELECT
+        measure_plate.id as id,
+        measure_plate.project_id as projectId,
+        measure_plate.parent_id as parentId,
+        measure_plate.type as type,
+        measure_plate.area as area,
+        measure_plate.product_name as productName,
+        measure_plate.product_type as productType,
+        measure_plate.length as length,
+        measure_plate.windth as windth,
+        measure_plate.height as height,
+        measure_plate.number as number,
+        measure_plate.process_mode as processMode,
+        measure_plate.process_instruction as processInstruction,
+        measure_plate.remarks as remarks,
+        measure_plate.gmt_create as gmtCreate,
+        measure_plate.gmt_modified as gmtModified,
+        measure_plate.image_id as imageId,
+        measure_plate.material_cost as materialCost,
+        measure_plate.process_cost as processCost,
+        measure_plate.installation_cost as installationCost,
+        measure_plate.excipient_cost as excipientCost,
+        measure_plate.nursing_cost as nursingCost,
+        measure_plate.sum_cost as sumCost,
+        picture_attchment.path as path ,
+        picture_attchment.filename as filename
+        FROM
+        measure_plate AS measure_plate
+        LEFT JOIN picture_attchment AS picture_attchment ON picture_attchment.id = measure_plate.image_id
+        LEFT JOIN project AS project ON measure_plate.project_id = project.id
+        <where>
+            project.status = #{status}
+        <if test="projectId != null and projectId!=''">
+            and measure_plate.project_id = #{projectId}
+        </if>
+        </where>
+    </select>
+</mapper>
